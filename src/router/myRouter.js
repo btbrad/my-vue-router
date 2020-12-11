@@ -4,7 +4,10 @@ class MyVueRouter {
   constructor (options) {
     this.$options = options
 
-    this.routeMap = this.$options.routes
+    this.routeMap = {}
+    this.$options.routes.forEach(route => {
+      this.routeMap[route.path] = route.component
+    })
 
     Vue.util.defineReactive(this, 'current', '/')
 
@@ -43,11 +46,7 @@ MyVueRouter.install = function (_vue) {
   Vue.component('router-view', {
     render (h) {
       const { current, routeMap } = this.$router
-      const component = routeMap.filter(route => {
-        if (route.path === `${current}`) {
-          return true
-        }
-      })[0].component
+      const component = routeMap[current]
       return h(component)
     }
   })
