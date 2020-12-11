@@ -1,3 +1,6 @@
+import myRouterLink from './myRouterLink'
+import myRouterView from './myRouterView'
+
 let Vue = null
 
 class MyVueRouter {
@@ -31,25 +34,9 @@ MyVueRouter.install = function (_vue) {
     }
   })
 
-  Vue.component('router-link', {
-    props: {
-      to: {
-        type: String,
-        default: '/'
-      }
-    },
-    render () {
-      return <a href={`#${this.to}`}>{this.$slots.default}</a>
-    }
-  })
+  Vue.component('router-link', myRouterLink)
 
-  Vue.component('router-view', {
-    render (h) {
-      const { current, routeMap } = this.$router
-      const component = routeMap[current]
-      return h(component)
-    }
-  })
+  Vue.component('router-view', myRouterView)
 }
 
 export default MyVueRouter
