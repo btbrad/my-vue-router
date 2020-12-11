@@ -14,15 +14,17 @@ class MyVueRouter {
       this.routeMap[route.path] = route.component
     })
 
+    // 如果url中没有hash, 则设置hash为#/
+    const initial = window.location.hash.slice(1) || '/'
     // vue源码中有相应的工具方法，只要在render中使用了响应式的数据，就会进行依赖收集
-    Vue.util.defineReactive(this, 'current', '/')
+    Vue.util.defineReactive(this, 'current', initial)
 
     window.addEventListener('hashchange', this.onHashChange.bind(this))
     window.addEventListener('load', this.onHashChange.bind(this))
   }
 
   onHashChange () {
-    this.current = window.location.hash.slice(1)
+    this.current = window.location.hash.slice(1) || '/'
   }
 }
 
