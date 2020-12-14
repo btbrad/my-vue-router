@@ -17,7 +17,11 @@ class MyVueRouter {
     // 如果url中没有hash, 则设置hash为#/
     const initial = window.location.hash.slice(1) || '/'
     // vue源码中有相应的工具方法，只要在render中使用了响应式的数据，就会进行依赖收集
-    Vue.util.defineReactive(this, 'current', initial)
+    // Vue.util.defineReactive(this, 'current', initial)
+    this.current = initial
+    Vue.util.defineReactive(this, 'matched', [])
+    // match方法可以递归遍历路由表，获得匹配关系数组
+    this.match()
 
     window.addEventListener('hashchange', this.onHashChange.bind(this))
     window.addEventListener('load', this.onHashChange.bind(this))
@@ -25,6 +29,27 @@ class MyVueRouter {
 
   onHashChange () {
     this.current = window.location.hash.slice(1) || '/'
+    this.matched = []
+    this.match()
+  }
+
+  match (routes) {
+    routes = routes || this.$options.routes
+
+    // 递归遍历
+    for (const route of routes) {
+      if (route.path === '/' && this.current === '/') {
+        this.matched.push(route)
+        return
+      }
+
+      if (route.path !== '/' && this.current.indexOf(route.path) !== -1) {
+        this.matched.push(route)
+        if (route.children) {
+          this.match(route.children)
+        }
+      }
+    }
   }
 }
 

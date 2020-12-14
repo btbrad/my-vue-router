@@ -79,3 +79,6 @@ Vue.component('router-view', {
   }
 })
 ```
+### 5. 处理嵌套路由
+- router-view深度标记
+- 路由匹配时获取代表深度层级的matched数组
