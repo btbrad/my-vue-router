@@ -42,7 +42,7 @@ class MyVueRouter {
         this.matched.push(route)
         return
       }
-
+      // 如果不是根路径，并且当前hash包含的path,都存入数组中
       if (route.path !== '/' && this.current.indexOf(route.path) !== -1) {
         this.matched.push(route)
         if (route.children) {

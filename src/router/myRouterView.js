@@ -1,6 +1,9 @@
 export default {
   render (h) {
     // 标记当前router-view深度
+    /**
+     * router-view是一个组件，去找到它父router-view组件， 通过这个来决定路由的层级
+     */
     this.$vnode.data.routerView = true
 
     let depth = 0
@@ -23,7 +26,6 @@ export default {
 
     let component = null
 
-    console.log(this.$router.matched)
     const route = this.$router.matched[depth]
     if (route) {
       component = route.component
