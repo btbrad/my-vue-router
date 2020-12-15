@@ -22,6 +22,8 @@ export default {
     // const component = routeMap[current]
 
     let component = null
+
+    console.log(this.$router.matched)
     const route = this.$router.matched[depth]
     if (route) {
       component = route.component
